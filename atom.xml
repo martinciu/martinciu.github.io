@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[martinciu's dev blog]]></title>
-  <link href="http://martinciu.github.io/atom.xml" rel="self"/>
-  <link href="http://martinciu.github.io/"/>
-  <updated>2015-02-05T01:09:39+01:00</updated>
-  <id>http://martinciu.github.io/</id>
+  <link href="http://martinciu.com/atom.xml" rel="self"/>
+  <link href="http://martinciu.com/"/>
+  <updated>2015-02-05T01:10:32+01:00</updated>
+  <id>http://martinciu.com/</id>
   <author>
     <name><![CDATA[Marcin Ciunelis]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Deploying Hubot to Heroku Like a Boss]]></title>
-    <link href="http://martinciu.github.io/2011/11/deploying-hubot-to-heroku-like-a-boss.html"/>
+    <link href="http://martinciu.com/2011/11/deploying-hubot-to-heroku-like-a-boss.html"/>
     <updated>2011-11-01T00:00:00+01:00</updated>
-    <id>http://martinciu.github.io/2011/11/deploying-hubot-to-heroku-like-a-boss</id>
+    <id>http://martinciu.com/2011/11/deploying-hubot-to-heroku-like-a-boss</id>
     <content type="html"><![CDATA[<h4>What is Hubot?</h4>
 
 <p><a href="http://hubot.github.com/">Hubot</a> was an almost mythical GitHub <a href="http://campfirenow.com/">campfire</a> bot. They use it for deploying, automate a lot of tasks, and to be a source of fun in the company. Was, because they <a href="https://github.com/blog/968-say-hello-to-hubot">open sourced</a> it some time age.</p>
@@ -150,9 +150,9 @@ drwxr-xr-x  <span class="m">12</span> martinciu  staff   <span class="m">408</sp
   
   <entry>
     <title type="html"><![CDATA[How to Add API Throttle to Your Rails App]]></title>
-    <link href="http://martinciu.github.io/2011/08/how-to-add-api-throttle-to-your-rails-app.html"/>
+    <link href="http://martinciu.com/2011/08/how-to-add-api-throttle-to-your-rails-app.html"/>
     <updated>2011-08-08T00:00:00+02:00</updated>
-    <id>http://martinciu.github.io/2011/08/how-to-add-api-throttle-to-your-rails-app</id>
+    <id>http://martinciu.com/2011/08/how-to-add-api-throttle-to-your-rails-app</id>
     <content type="html"><![CDATA[<h4>Does your app have API?</h4>
 
 <p>Yes? That&rsquo;s awesome! But are you sure that it is safe? And I don&rsquo;t mean if you secured access with api_key, Basic HTTP or anything like this. I mean if it is safe for your severs? At <a href="http://zubibu.com/">zubibu</a> we are going to add API for updating items in customer shops. It is pretty simple and obvious method. But if some API client use it in bad way it can harm us. For example, if an online store with 400 thousands items decided to decrease all prices by 2% for each item, and if they implemented <a href="http://zubibu.com/">zubibu</a> API call after each item update - it could harm us. 400k requests in a very short period of time could be dangerous for many apps.</p>
@@ -269,9 +269,9 @@ X-RateLimit-Remaining: 0</code></pre></div>
   
   <entry>
     <title type="html"><![CDATA[Upgrading to Rails 3.1.0.rc5 (From Rc4)]]></title>
-    <link href="http://martinciu.github.io/2011/08/upgrading-to-rails-3-1-rc5.html"/>
+    <link href="http://martinciu.com/2011/08/upgrading-to-rails-3-1-rc5.html"/>
     <updated>2011-08-02T00:00:00+02:00</updated>
-    <id>http://martinciu.github.io/2011/08/upgrading-to-rails-3-1-rc5</id>
+    <id>http://martinciu.com/2011/08/upgrading-to-rails-3-1-rc5</id>
     <content type="html"><![CDATA[<h4>Rails 3.1.0.rc5</h4>
 
 <p>Rails 3.1.0.rc5 is <a href="http://groups.google.com/group/rubyonrails-talk/browse_thread/thread/ae3139e531b970a2">out</a>. If your app doesn&rsquo;t use rails 3.1 yet you may want to read <a href="http://davidjrice.co.uk/2011/05/25/how-to-upgrade-a-rails-application-to-version-3-1-0.html">this</a> and probably <a href="http://martinciu.com/2011/06/rails-3-1-and-slow-asset-pipeline.html">this</a>. If you have balls and you already use version 3.1, you probably would like to use rc5 ASAP.</p>
@@ -328,9 +328,9 @@ X-RateLimit-Remaining: 0</code></pre></div>
   
   <entry>
     <title type="html"><![CDATA[Difference Between Class_inheritable_attribute and Class_attribute]]></title>
-    <link href="http://martinciu.github.io/2011/07/difference-between-class_inheritable_attribute-and-class_attribute.html"/>
+    <link href="http://martinciu.com/2011/07/difference-between-class_inheritable_attribute-and-class_attribute.html"/>
     <updated>2011-07-07T00:00:00+02:00</updated>
-    <id>http://martinciu.github.io/2011/07/difference-between-class_inheritable_attribute-and-class_attribute</id>
+    <id>http://martinciu.com/2011/07/difference-between-class_inheritable_attribute-and-class_attribute</id>
     <content type="html"><![CDATA[<h4>Deprecation warning</h4>
 
 <p>After you upgrade to Rails 3.1 you may be attacked by deprecation warnings similar to this one:</p>
@@ -409,9 +409,9 @@ X-RateLimit-Remaining: 0</code></pre></div>
   
   <entry>
     <title type="html"><![CDATA[Building Your Own Hoptoad App Clone With Errbit, VMware Cloud Foundry and MongoDB]]></title>
-    <link href="http://martinciu.github.io/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb.html"/>
+    <link href="http://martinciu.com/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb.html"/>
     <updated>2011-07-01T00:00:00+02:00</updated>
-    <id>http://martinciu.github.io/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb</id>
+    <id>http://martinciu.com/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb</id>
     <content type="html"><![CDATA[<h4>Disclaimer</h4>
 
 <p>Please note that <a href="http://cloudfoundry.com/" title="Cloud Foundry website">VMware Cloud Foundry</a> is under heavy <a href="https://github.com/cloudfoundry">development</a> right now. It means that some of the things written below might not be valid at time you are reading it. Please leave a comment if you find any outdated stuff.</p>
@@ -632,9 +632,9 @@ Starting Application: OK</code></pre></div>
   
   <entry>
     <title type="html"><![CDATA[Rails 3.1 and Slow Asset Pipeline]]></title>
-    <link href="http://martinciu.github.io/2011/06/rails-3-1-and-slow-asset-pipeline.html"/>
+    <link href="http://martinciu.com/2011/06/rails-3-1-and-slow-asset-pipeline.html"/>
     <updated>2011-06-25T00:00:00+02:00</updated>
-    <id>http://martinciu.github.io/2011/06/rails-3-1-and-slow-asset-pipeline</id>
+    <id>http://martinciu.com/2011/06/rails-3-1-and-slow-asset-pipeline</id>
     <content type="html"><![CDATA[<h4>tl;dr;</h4>
 <p><strong>Rails 3.1 Asset Pipeline is not slow! It is your app!</strong> If your app became slow after upgrading to Rails 3.1 and you use <a href="http://mongoid.org/">Mongoid</a> &#8211; turn preloading models off. If this won&#8217;t help profile your app with <a href="https://github.com/bhb/rack-perftools_profiler">rack-perftools_profiler</a>.</p>
 <h4>Rails 3.1</h4>
@@ -645,7 +645,7 @@ Starting Application: OK</code></pre></div>
 <div class="highlight"><pre><code class="language-erb" data-lang="erb"><span class="x">background: #ffffff url(</span><span class="cp">&lt;%=</span> <span class="n">asset_path</span> <span class="s2">&quot;backend/bg.png&quot;</span><span class="cp">%&gt;</span><span class="x">) repeat-x 0 0</span></code></pre></div><p>and add <code>.erb</code> extension to all modified <span class="caps">CSS</span> files. One good regular expression should be enough for updating all your files.</p>
 <h4>Horror</h4>
 <p>I restarted application and then the horror begun. It was impossible to load whole page with all the assts. Some assets returned 500 status code, some load in 30+ seconds. I tried some tricks with linking <code>app/assets/images/</code> folder to <code>public/images/</code>. It helped a lot, as images was not served by rails, but still <span class="caps">CSS</span> and JavaScript files was very slow. If I don&#8217;t reload pages by <code>CMD+R</code> I was able to work, but styling pages was almost impossible.<br />
-<img src="http://martinciu.github.io/images/posts/2011-06-25-rails-3-1-and-slow-asset-pipeline/assets.jpg" title="slow assets pipeline" alt="slow assets pipeline" /></p>
+<img src="http://martinciu.com/images/posts/2011-06-25-rails-3-1-and-slow-asset-pipeline/assets.jpg" title="slow assets pipeline" alt="slow assets pipeline" /></p>
 <h4>Why is it so slow?</h4>
 <p>I couldn&#8217;t believe that asset pipeline is so slow. Yes, it should be slower that serving static files from disk but it should not be <span class="caps">THAT</span> slow. I decided to check what is wrong. I created new rails 3.1 application, added one model with scaffold, one stylesheet and one javascript. I started the application and everything was alright. Assets was loading under 50ms. Then I&#8217;ve added more images, stylesheets, and javascripts. About twenty files together. And still everything was running smoothly. We use <a href="http://mongoid.org/">mongoid</a> as an <span class="caps">ORM</span> in <a href="http://zubibu.com">zubibu</a>, so I migrated the only model to <a href="http://mongoid.org/">mongoid</a>. But it still was damn fast! It was fast until I added more models to my test application. After adding 30 models (with relations between them) assets started to load in about 3 seconds each. The models was very simple without any logic &#8211; just a few fields and references each. It means that it could be models them self but the fact that there are many models.</p>
 <h4>perftools.rb</h4>
@@ -670,9 +670,9 @@ Starting Application: OK</code></pre></div>
   
   <entry>
     <title type="html"><![CDATA[Blogging Like a Hacker Using Jekyll, Compass and Foreman]]></title>
-    <link href="http://martinciu.github.io/2011/06/blogging-like-a-hacker-using-jekyll-compass-and-foreman.html"/>
+    <link href="http://martinciu.com/2011/06/blogging-like-a-hacker-using-jekyll-compass-and-foreman.html"/>
     <updated>2011-06-17T00:00:00+02:00</updated>
-    <id>http://martinciu.github.io/2011/06/blogging-like-a-hacker-using-jekyll-compass-and-foreman</id>
+    <id>http://martinciu.com/2011/06/blogging-like-a-hacker-using-jekyll-compass-and-foreman</id>
     <content type="html"><![CDATA[<p>You probably already know <a href="http://tom.preston-werner.com/2008/11/17/blogging-like-a-hacker.html">how to blog like a hacker</a> using <a href="http://git-scm.com/">Git</a> and <a href="http://jekyllrb.com/">Jekyll</a> It is realy simple but powerfull way of maintaing personal blog. If you put it&#8217;s code on the <a href="https://github.com/">github</a> like <a href="https://github.com/jeffkreeftmeijer/jeffkreeftmeijer.com">Jeff Kreeftmeijer</a> did you can even count on comunity <a href="pool-request">contribution</a> to your own personal blog. How could is that!</p>
 <p>If don&#8217;t use <a href="http://jekyllrb.com/">jekyll</a> for you blog you should definetly reconsider that. If you already do use jekyll you probably know that for developemnt you need to run</p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>jekyll --server</code></pre></div><p>to set up simple local server that automatically regenarates static files echa time they are changend. If you also use <a href="http://sass-lang.com/"><span class="caps">SASS</span></a> or <a href="http://compass-style.org/">Compass</a> for your stylesheets you need to run in second terminal</p>
@@ -684,7 +684,7 @@ Starting Application: OK</code></pre></div>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">jekyll:  jekyll --server
 comapss: compass watch</code></pre></div><p>To start both processes just type</p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>foreman start</code></pre></div><p>and you should see smething similar to:</p>
-<p><img src="http://martinciu.github.io/images/posts/2011-06-17-blogging-like-a-hacker-using-jekyll-compass-and-foreman/foreman.png" title="forman start output" alt="forman start output" /></p>
+<p><img src="http://martinciu.com/images/posts/2011-06-17-blogging-like-a-hacker-using-jekyll-compass-and-foreman/foreman.png" title="forman start output" alt="forman start output" /></p>
 <p>That&#8217;s it! Your are a better now!</p>
 <p>Enjoy!</p>
 
@@ -699,9 +699,9 @@ comapss: compass watch</code></pre></div><p>To start both processes just type</p
   
   <entry>
     <title type="html"><![CDATA[Rails 2.2, Bundler, Rack and Pow]]></title>
-    <link href="http://martinciu.github.io/2011/06/rails2.2-bunlder-rack-and-pow.html"/>
+    <link href="http://martinciu.com/2011/06/rails2.2-bunlder-rack-and-pow.html"/>
     <updated>2011-06-16T00:00:00+02:00</updated>
-    <id>http://martinciu.github.io/2011/06/rails2.2-bunlder-rack-and-pow</id>
+    <id>http://martinciu.com/2011/06/rails2.2-bunlder-rack-and-pow</id>
     <content type="html"><![CDATA[<p>Yesterday I have upgraded our production server. I updated <a href="https://rubygems.org">rubygems</a> to version 1.8.5 and <a href="http://gembundler.com">bundler</a> to 1.1.pre.5. I also updated <a href="http://zuibu.com">zubibu.com</a> &#8216;s staging server by uploading quite a few new gems. One of these actions (or all of them together) broke a few old, low-trafic <a href="http://rubyonrails.org/">rails</a> websites. I didn&#8217;t investigate what exactly did break them. All broken websites had one thing in common &#8211; they were so old that they didn&#8217;t use bunlder to manage gems.</p>
 <h4>Bundler</h4>
 <p>Most of them was written in rails 2.3, so managing them to user bundler was preaty easy. You can <a href="bunlder-rails23">manual</a> on bundler website how to do it and that simply wokrs. But one of the broken webisetes was running Rails 2.2.2. I googled if such old app can use bundler, but didn&#8217;t find any answers. So I decided to try it. I started with the <a href="http://gembundler.com/rails23.html">inststructions</a> for rails 2.3 app.</p>
@@ -748,7 +748,7 @@ comapss: compass watch</code></pre></div><p>To start both processes just type</p
 <span class="n">gem</span> <span class="s1">&#39;rdoc&#39;</span></code></pre></div><p>After <code>bundle install</code> all the tests passed. Yay!</p>
 <h4>Pow &amp; Rack</h4>
 <p>I run all my rails application using <a href="http://pow.cx/">Pow</a>. This one I wanted to run same as others. I just add a symbolic link in my <code>~./pow</code> folder and visited an .dev url in the browser and I got this message:</p>
-<p><img src="http://martinciu.github.io/images/posts/2011-06-16-rails2.2-bunlder-rack-and-pow.textile/pow.png" title="If you’re using a version of Rails older than 2.3, you’ll need to upgrade first." alt="If you’re using a version of Rails older than 2.3, you’ll need to upgrade first." /></p>
+<p><img src="http://martinciu.com/images/posts/2011-06-16-rails2.2-bunlder-rack-and-pow.textile/pow.png" title="If you’re using a version of Rails older than 2.3, you’ll need to upgrade first." alt="If you’re using a version of Rails older than 2.3, you’ll need to upgrade first." /></p>
 <p>Not good :(. They advised me to upgrade my application but I realy don&#8217;t want to do. Before I googled how to upgrade from rails 2.2 to 2.3 I decided to give it a try and just add the <code>cofnig.ru</code> file.</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/config/environment&#39;</span>
 <span class="n">run</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Dispatcher</span><span class="o">.</span><span class="n">new</span></code></pre></div><p>Then I vited app&#8217;s dev url in the browser just to get this message:</p>
@@ -766,9 +766,9 @@ comapss: compass watch</code></pre></div><p>To start both processes just type</p
   
   <entry>
     <title type="html"><![CDATA[Mounting Grape API Inside Rails Application]]></title>
-    <link href="http://martinciu.github.io/2011/01/mounting-grape-api-inside-rails-application.html"/>
+    <link href="http://martinciu.com/2011/01/mounting-grape-api-inside-rails-application.html"/>
     <updated>2011-01-07T00:00:00+01:00</updated>
-    <id>http://martinciu.github.io/2011/01/mounting-grape-api-inside-rails-application</id>
+    <id>http://martinciu.com/2011/01/mounting-grape-api-inside-rails-application</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/intridea/grape">Grape</a> is a <span class="caps">REST</span>-like <span class="caps">API</span> micro-framework for Ruby. It is built to complement existing web application frameworks such as <a href="http://rubyonrails.org/">Rails</a> and <a href="http://www.sinatrarb.com/">Sinatra</a> by providing a simple <span class="caps">DSL</span> to easily provide APIs. It has built-in support for common conventions such as multiple formats, subdomain/prefix restriction, and versioning.  Because <a href="https://github.com/intridea/grape">grape</a> APIs are <a href="http://rack.rubyforge.org/">Rack</a> applications, it is very easy (in rails 3) and quite easy (in rails 2.3) to mount it in your existing rails application.</p>
 <h4><span class="caps">API</span></h4>
 <p>Let’s start with a simple <span class="caps">API</span>. Assuming you have a simple blog application with Post resource and you want to list all posts and show a specific post by ID using <span class="caps">API</span>.</p>
@@ -842,9 +842,9 @@ comapss: compass watch</code></pre></div><p>To start both processes just type</p
   
   <entry>
     <title type="html"><![CDATA[Differences Between Proc.new and Lambda in Ruby]]></title>
-    <link href="http://martinciu.github.io/2010/12/differences-between-proc-new-and-lambda-in-ruby.html"/>
+    <link href="http://martinciu.com/2010/12/differences-between-proc-new-and-lambda-in-ruby.html"/>
     <updated>2010-12-27T00:00:00+01:00</updated>
-    <id>http://martinciu.github.io/2010/12/differences-between-proc-new-and-lambda-in-ruby</id>
+    <id>http://martinciu.com/2010/12/differences-between-proc-new-and-lambda-in-ruby</id>
     <content type="html"><![CDATA[<p>It will be another not very innovative post about a something that probably most Ruby developers already know. Unfortunately I didn’t know about this  before, and I think it will be a quite good form of this blog, that I will be posting things that I’ve recently learned. So here is what I’ve learned today.</p>
 <p><code>Proc.new</code> and <code>lambda</code> does almost the same job. They provide a dynamically created inline method. But they are slightly different. What are the differences? There are two (as far as I know at the moment)</p>
 <h4>1. Acceptance of parameters</h4>
@@ -890,9 +890,9 @@ Examples:</h4>
   
   <entry>
     <title type="html"><![CDATA[Ruby Doesn’t Have Class Methods]]></title>
-    <link href="http://martinciu.github.io/2010/12/ruby-doesnt-have-class-methods.html"/>
+    <link href="http://martinciu.com/2010/12/ruby-doesnt-have-class-methods.html"/>
     <updated>2010-12-23T00:00:00+01:00</updated>
-    <id>http://martinciu.github.io/2010/12/ruby-doesnt-have-class-methods</id>
+    <id>http://martinciu.com/2010/12/ruby-doesnt-have-class-methods</id>
     <content type="html"><![CDATA[<p>Maybe it is not very innovative and every ruby developer already knows about it, but when I first heard it, it was quite a hit. I mean I always feel that there is something wired on when I wrote some thing like <code>“def self.foo”</code> in my class, but I didn’t fully understand actually does this line do.</p>
 <p>Alright. How can ruby doesn’t have class methods that I use them all time, you could ask. You mean something like this?</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Foo</span>
@@ -937,9 +937,9 @@ Examples:</h4>
   
   <entry>
     <title type="html"><![CDATA[Ruby Timeout::Error Is Not a StandardError]]></title>
-    <link href="http://martinciu.github.io/2010/12/ruby-timeout-error-is-not-a-standard-error.html"/>
+    <link href="http://martinciu.com/2010/12/ruby-timeout-error-is-not-a-standard-error.html"/>
     <updated>2010-12-21T00:00:00+01:00</updated>
-    <id>http://martinciu.github.io/2010/12/ruby-timeout-error-is-not-a-standard-error</id>
+    <id>http://martinciu.com/2010/12/ruby-timeout-error-is-not-a-standard-error</id>
     <content type="html"><![CDATA[<p>Let&#8217;s assume that you have piece of code that does a very important job but some times this job can not be accomplished because of various reasons. One of them could be a timeout . It should also inform you nicely about that:</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno">1</span> <span class="nb">require</span> <span class="s2">&quot;timeout&quot;</span>
 <span class="lineno">2</span>  
@@ -981,9 +981,9 @@ Examples:</h4>
   
   <entry>
     <title type="html"><![CDATA[RailsAdmin]]></title>
-    <link href="http://martinciu.github.io/2010/12/rails-admin.html"/>
+    <link href="http://martinciu.com/2010/12/rails-admin.html"/>
     <updated>2010-12-19T00:00:00+01:00</updated>
-    <id>http://martinciu.github.io/2010/12/rails-admin</id>
+    <id>http://martinciu.com/2010/12/rails-admin</id>
     <content type="html"><![CDATA[<p>Erlier this week <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> came out to the wider world.</p>
 <p><a href="https://github.com/sferik/rails_admin">RailsAdmin</a> is a Rails engine that provides an easy-to-use interface for managing your data. <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> started as a port of <a href="http://github.com/sferik/merb-admin">MerbAdmin</a> to Rails3 and was implemented as a <a href="http://www.rubysoc.org/projects">Ruby Summer of Code</a> project by <a href="http://github.com/hurrycane">Bogdan Gaza</a> with mentors <a href="http://github.com/sferik">Erik Michaels-Ober</a>, <a href="http://github.com/wycats">Yehuda Katz</a>, <a href="http://github.com/rosenfeld">Rodrigo Rosenfeld Rosas</a>, <a href="http://github.com/plukevdh">Luke van der Hoeven</a>, and <a href="rein">Rein Henrichs</a>.</p>
 <p>I first heard it from <a href="http://twitter.com/josevalim/status/15349132516397056">Jose Valim’s tweet</a>. If he said it is very well written, it has be so. At first I thought about <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> as another <a href="http://www.activescaffold.com/">ActiveScaffold</a> or <a href="http://streamlinedframework.org/">Streamlined</a> clone. Then I remembered that I gave a try some of them but each had some issues that makes them unusable in my projects. That’s why I decided to try out the newest rails administration engine.</p>
@@ -1017,9 +1017,9 @@ Examples:</h4>
   
   <entry>
     <title type="html"><![CDATA[My Gemfile]]></title>
-    <link href="http://martinciu.github.io/2010/12/my-gemfile.html"/>
+    <link href="http://martinciu.com/2010/12/my-gemfile.html"/>
     <updated>2010-12-19T00:00:00+01:00</updated>
-    <id>http://martinciu.github.io/2010/12/my-gemfile</id>
+    <id>http://martinciu.com/2010/12/my-gemfile</id>
     <content type="html"><![CDATA[<p>For each new rails project I almost always put same gems to the Gemfile with initial commit. Here is my gemfile compiled from a few recent projects. Hope some of you find something new for your projects.</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s1">&#39;http://rubygems.org&#39;</span>
  
@@ -1071,9 +1071,9 @@ Examples:</h4>
   
   <entry>
     <title type="html"><![CDATA[Fuubar-cucumber]]></title>
-    <link href="http://martinciu.github.io/2010/10/fuubar-cucumber.html"/>
+    <link href="http://martinciu.com/2010/10/fuubar-cucumber.html"/>
     <updated>2010-10-21T00:00:00+02:00</updated>
-    <id>http://martinciu.github.io/2010/10/fuubar-cucumber</id>
+    <id>http://martinciu.com/2010/10/fuubar-cucumber</id>
     <content type="html"><![CDATA[<p>A few days ago <a href="http://jeffkreeftmeijer.com/">Jeff Kreeftmeijer</a> released <a href="http://jeffkreeftmeijer.com/2010/fuubar-the-instafailing-rspec-progress-bar-formatter/">Fuubar: the instafailing RSpec progress bar formatter</a>. It is great, and I use it as default formatter in all my projects. As I started to use it I realised that it would be great to have similar formatter for <a href="https://github.com/aslakhellesoy/cucumber">Cucumber</a>. At first I wanted to add cucuber formatter class to <a href="https://github.com/jeffkreeftmeijer/fuubar">Jeff’s gem</a>, but later I decided to make it a separet gam because of gem dependencies.</p>
 <p>This is where <a href="https://github.com/martinciu/fuubar-cucumber">fuubar-cucumber</a> came from. Installation is simple. Just add it to your gem file:</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s1">&#39;fuubar-cucumber&#39;</span></code></pre></div><p>or install manualy</p>

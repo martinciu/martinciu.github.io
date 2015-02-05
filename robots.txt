@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://martinciu.github.io/sitemap.xml 
+Sitemap: http://martinciu.com/sitemap.xml 
