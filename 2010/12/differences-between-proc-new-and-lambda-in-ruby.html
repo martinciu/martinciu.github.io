@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Differences Between Proc.new and Lambda in Ruby - martinciu&#8217;s dev blog</title>
+  <meta name="author" content="Marcin Ciunelis">
+
+  
+  <meta name="description" content="It will be another not very innovative post about a something that probably most Ruby developers already know. Unfortunately I didn’t know about this &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://martinciu.github.io/2010/12/differences-between-proc-new-and-lambda-in-ruby.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="martinciu's dev blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-152335-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">martinciu&#8217;s dev blog</a></h1>
+  
+    <h2>about ruby, rails, javascript, nodejs, coffeescript, objective-c, swift</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  
+  
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/contact">Contact me</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="http://linkedin.com/in/martinciu/" target="_blank">LinkedIn</a></li>
+  <li><a href="https://github.com/martinciu" target="_blank">Github</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Differences Between Proc.new and Lambda in Ruby</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-27T00:00:00+01:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>It will be another not very innovative post about a something that probably most Ruby developers already know. Unfortunately I didn’t know about this  before, and I think it will be a quite good form of this blog, that I will be posting things that I’ve recently learned. So here is what I’ve learned today.</p>
+<p><code>Proc.new</code> and <code>lambda</code> does almost the same job. They provide a dynamically created inline method. But they are slightly different. What are the differences? There are two (as far as I know at the moment)</p>
+<h4>1. Acceptance of parameters</h4>
+<p><code>Proc.new</code> doesn’t care how many parameter do you provide, when <code>lambda</code> needs exact number of parameters. Example:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">pr</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span> <span class="p">{</span><span class="o">|</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">}</span>
+<span class="n">pr</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="c1"># 1</span>
+<span class="c1"># 2</span>
+<span class="c1"># 3</span></code></pre></div><p>&#8230;and&#8230;</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">pr</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">}</span>
+<span class="n">pr</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="c1"># ArgumentError: wrong number of arguments (4 for 3)</span></code></pre></div><h4>2. Returning from a proc<br />
+<code>return</code> called in <code>Proc.new</code> block returns from enclosing method when return called in <code>lambda</code> block returns from just a block.<br />
+Examples:</h4>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">my_method</span>
+  <span class="nb">puts</span> <span class="s2">&quot;Starting my_method&quot;</span>
+  <span class="n">pr</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span> <span class="p">{</span><span class="k">return</span><span class="p">}</span>
+  <span class="n">pr</span><span class="o">.</span><span class="n">call</span>
+  <span class="nb">puts</span> <span class="s2">&quot;Finishing my_method&quot;</span>
+<span class="k">end</span>
+ 
+<span class="nb">puts</span> <span class="s2">&quot;Before my_method&quot;</span>
+<span class="n">my_method</span>
+<span class="nb">puts</span> <span class="s2">&quot;After my_method&quot;</span>
+<span class="c1"># Before my_method</span>
+<span class="c1"># Starting my_method</span>
+<span class="c1"># After my_method</span></code></pre></div><p>but&#8230;</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">my_method</span>
+  <span class="nb">puts</span> <span class="s2">&quot;Starting my_method&quot;</span>
+  <span class="n">pr</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="p">{</span><span class="k">return</span><span class="p">}</span>
+  <span class="n">pr</span><span class="o">.</span><span class="n">call</span>
+  <span class="nb">puts</span> <span class="s2">&quot;Finishing my_method&quot;</span>
+<span class="k">end</span>
+ 
+<span class="nb">puts</span> <span class="s2">&quot;Before my_method&quot;</span>
+<span class="n">my_method</span>
+<span class="nb">puts</span> <span class="s2">&quot;After my_method&quot;</span>
+<span class="c1"># Before my_method</span>
+<span class="c1"># Starting my_method</span>
+<span class="c1"># Finishing my_method</span>
+<span class="c1"># After my_method</span></code></pre></div><p>The other thing that is worth mentioning is that there exist an instruction called <code>proc</code>. What is wired, it works different in ruby 1.8 and in version 1.9. In Ruby 1.8 proc behaviors like <code>lambda</code> when in Ruby 1.9 it works like <code>Proc.ne</code>w. Because of this, and because of ruumors that proc instruction will be removed in ruby 2.0, I don’t recommend using it in your code.</p></div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Marcin Ciunelis</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-27T00:00:00+01:00" pubdate data-updated="true"></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://martinciu.github.io/2010/12/differences-between-proc-new-and-lambda-in-ruby.html" data-via="martinciu" data-counturl="http://martinciu.github.io/2010/12/differences-between-proc-new-and-lambda-in-ruby.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2010/12/ruby-doesnt-have-class-methods.html" title="Previous Post: Ruby doesn’t have class methods">&laquo; Ruby doesn’t have class methods</a>
+      
+      
+        <a class="basic-alignment right" href="/2011/01/mounting-grape-api-inside-rails-application.html" title="Next Post: Mounting Grape API inside rails application">Mounting Grape API inside rails application &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+  <aside class="sidebar">
+   
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:martinciu.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2011/11/deploying-hubot-to-heroku-like-a-boss.html">Deploying Hubot to Heroku Like a Boss</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/08/how-to-add-api-throttle-to-your-rails-app.html">How to Add API Throttle to Your Rails App</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/08/upgrading-to-rails-3-1-rc5.html">Upgrading to Rails 3.1.0.rc5 (From Rc4)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/07/difference-between-class_inheritable_attribute-and-class_attribute.html">Difference Between Class_inheritable_attribute and Class_attribute</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb.html">Building Your Own Hoptoad App Clone With Errbit, VMware Cloud Foundry and MongoDB</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <a class="twitter-timeline" href="https://twitter.com/martinciu" data-widget-id="535752399613603840">Tweets by @martinciu</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/martinciu">@martinciu</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'martinciu',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Marcin Ciunelis -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'martinciu';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<script>
+  $(document).ready(function() {  
+  var stickyNavTop = $('nav').offset().top;  
+    
+  var stickyNav = function(){  
+  var scrollTop = $(window).scrollTop();  
+         
+  if (scrollTop > stickyNavTop) {   
+      $('nav').addClass('sticky');  
+  } else {  
+      $('nav').removeClass('sticky');   
+  }  
+  };  
+    
+  stickyNav();  
+    
+  $(window).scroll(function() {  
+      stickyNav();  
+  });  
+  });  
+</script>
+
+<script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4e1384ecf5a1f53f55000003');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

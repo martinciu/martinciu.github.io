@@ -1,0 +1,526 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Building Your Own Hoptoad App Clone With Errbit, VMware Cloud Foundry and MongoDB - martinciu&#8217;s dev blog</title>
+  <meta name="author" content="Marcin Ciunelis">
+
+  
+  <meta name="description" content="Disclaimer Please note that VMware Cloud Foundry is under heavy development right now. It means that some of the things written below might not be &hellip;">
+  <meta name="keywords" content="rails, ruby, errbit, vmware, cloud foundry, mongoid, rails 3.1, hoptoad">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://martinciu.github.io/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="martinciu's dev blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-152335-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">martinciu&#8217;s dev blog</a></h1>
+  
+    <h2>about ruby, rails, javascript, nodejs, coffeescript, objective-c, swift</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  
+  
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/contact">Contact me</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="http://linkedin.com/in/martinciu/" target="_blank">LinkedIn</a></li>
+  <li><a href="https://github.com/martinciu" target="_blank">Github</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Building Your Own Hoptoad App Clone With Errbit, VMware Cloud Foundry and MongoDB</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-01T00:00:00+02:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h4>Disclaimer</h4>
+
+<p>Please note that <a href="http://cloudfoundry.com/" title="Cloud Foundry website">VMware Cloud Foundry</a> is under heavy <a href="https://github.com/cloudfoundry">development</a> right now. It means that some of the things written below might not be valid at time you are reading it. Please leave a comment if you find any outdated stuff.</p>
+
+<h4>Errbit</h4>
+
+<blockquote><p><a href="https://github.com/jdpace/errbit">Errbit</a> is an open source, self-hosted error catcher. It is <a href="http://hoptoadapp.com/pages/home">Hoptoad</a> API compliant so you can just point the <a href="http://hoptoadapp.com/pages/home">Hoptoad</a> notifier at your Errbit server if you are already using <a href="http://hoptoadapp.com/pages/home">Hoptoad</a>.</p></blockquote>
+
+<p>Because Errbit is self-hosted solution you need to have a decent server to run it. You can run it on you own server, you can run it on <a href="http://www.heroku.com/">heroku</a> - details in Errbit&rsquo;s <a href="https://github.com/relevance/errbit/blob/master/README.md">Readme</a> or you can use Cloud Foundry. This post is a simple tutorial how to do it.</p>
+
+<h4>What is VMware Cloud Foundry</h4>
+
+<blockquote><p>Cloud Foundry is the open platform as a service project initiated by VMware. It can support multiple frameworks, multiple cloud providers, and multiple application services all on a cloud scale platform.</p></blockquote>
+
+<p>You can download from Cloud Foundry from GitHub <a href="https://github.com/cloudfoundry">repository</a> and set up your own cloud infrastructure or you can use hosted by VMware one. In this tutorial we use hosted one.</p>
+
+<h4>Cloud Foundry account and VMC tools</h4>
+
+<p>At first we need a <a href="http://cloudfoundry.com/signup">Cloud Foundry account</a>. They was at closed beta at the time I sign up. I had to wait a few days to get an account. I don&rsquo;t know if it still apply. After you get an account install Cloud Foundry <a href="http://support.cloudfoundry.com/entries/20012337-getting-started-guide-command-line-vmc-users">VMC tools</a>. VMC is a command line client for Cloud Foundry.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>gem install vmc</code></pre></div>
+
+
+<p>Then log in to Cloud Foundry using credentials.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vmc login  
+Email: marcin.ciunelis@gmail.com
+Password: ******
+Successfully logged into <span class="o">[</span>http://api.cloudfoundry.com<span class="o">]</span></code></pre></div>
+
+
+<p>You may want to change automatically generated password. You can do that using VMC tools:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vmc passwd  
+Changing password <span class="k">for</span> <span class="s1">&#39;marcin.ciunelis@gmail.com&#39;</span>
+New Password: ******
+Verify Password: ******
+
+Successfully changed password</code></pre></div>
+
+
+<h4>Errbit</h4>
+
+<p><a href="https://github.com/jdpace/errbit">Errbit</a> will not work out of the box on Cloud Foundry. We need to modify it a little. I won&rsquo;t write here how to set up Errbit on your local box. You can find it on project <a href="https://github.com/relevance/errbit/blob/master/README.md">README</a> file. I&rsquo;m going to focus on Cloud Foundry specific issues mainly. First, clone it from GitHub repository.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone git://github.com/jdpace/errbit.git</code></pre></div>
+
+
+<p>When you open <code>Gemfile</code> you will notice that <code>redmine_client</code> gem is taken from git repository, not from official gem release because official one does not work with Rails3. If you are not going to use <a href="http://www.redmine.org/">Redmine</a> integration you can safely comment that line out. If want to use <a href="http://www.redmine.org/">Redmine</a> you we will need to figure out something smarter :)</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Gemfile</span>
+<span class="n">gem</span> <span class="s1">&#39;lighthouse-api&#39;</span>
+<span class="c1"># gem &#39;redmine_client&#39;, :git =&gt; &quot;git://github.com/oruen/redmine_client.git&quot;</span>
+<span class="n">gem</span> <span class="s1">&#39;mongoid_rails_migrations&#39;</span>
+<span class="c1">#...</span></code></pre></div>
+
+
+<p>The other thing that Cloud Foundry currently does not support is running <code>rake</code> task. Errbit requires running <code>rake errbit:bootstrap</code> which copy <code>config/config.yml</code>, <code>config/mongoid.yml</code> files and seed the database. You can run this task on your local box to create config files.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rake errbit:bootstrap
+Copying example config files...
+-- Copying config/config.example.yml to config/config.yml
+-- Copying config/deploy.example.rb to config/deploy.rb
+-- Copying config/mongoid.example.yml to config/mongoid.yml
+
+Seeding database
+-------------------------------
+Creating an initial admin user:
+-- email:    errbit@errbit.example.com
+-- password: password
+
+Be sure to change these credentials ASAP!
+
+Generating indexes <span class="k">for</span> App
+Generating indexes <span class="k">for</span> Err
+Generating indexes <span class="k">for</span> Notice
+Generating indexes <span class="k">for</span> User</code></pre></div>
+
+
+<p>Edit <code>config/config.yml</code> file amending <code>host</code> (it must be uniqe) and <code>email_from</code> lines. Also production section in your <code>config/mongoid.yml</code> file should looks like this:</p>
+
+<div class="highlight"><pre><code class="language-erb" data-lang="erb"><span class="x">production:</span>
+<span class="x">  host: </span><span class="cp">&lt;%=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;VCAP_SERVICES&#39;</span><span class="o">]</span> <span class="p">)</span><span class="o">[</span><span class="s1">&#39;mongodb-1.8&#39;</span><span class="o">].</span><span class="n">first</span><span class="o">[</span><span class="s1">&#39;credentials&#39;</span><span class="o">][</span><span class="s1">&#39;hostname&#39;</span><span class="o">]</span> <span class="k">rescue</span> <span class="s1">&#39;localhost&#39;</span> <span class="cp">%&gt;</span><span class="x"></span>
+<span class="x">  port: </span><span class="cp">&lt;%=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;VCAP_SERVICES&#39;</span><span class="o">]</span> <span class="p">)</span><span class="o">[</span><span class="s1">&#39;mongodb-1.8&#39;</span><span class="o">].</span><span class="n">first</span><span class="o">[</span><span class="s1">&#39;credentials&#39;</span><span class="o">][</span><span class="s1">&#39;port&#39;</span><span class="o">]</span> <span class="k">rescue</span> <span class="mi">27017</span> <span class="cp">%&gt;</span><span class="x"></span>
+<span class="x">  database:  </span><span class="cp">&lt;%=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;VCAP_SERVICES&#39;</span><span class="o">]</span> <span class="p">)</span><span class="o">[</span><span class="s1">&#39;mongodb-1.8&#39;</span><span class="o">].</span><span class="n">first</span><span class="o">[</span><span class="s1">&#39;credentials&#39;</span><span class="o">][</span><span class="s1">&#39;db&#39;</span><span class="o">]</span> <span class="k">rescue</span> <span class="s1">&#39;errbit_development&#39;</span> <span class="cp">%&gt;</span><span class="x"></span>
+<span class="x">  username: </span><span class="cp">&lt;%=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;VCAP_SERVICES&#39;</span><span class="o">]</span> <span class="p">)</span><span class="o">[</span><span class="s1">&#39;mongodb-1.8&#39;</span><span class="o">].</span><span class="n">first</span><span class="o">[</span><span class="s1">&#39;credentials&#39;</span><span class="o">][</span><span class="s1">&#39;username&#39;</span><span class="o">]</span> <span class="k">rescue</span> <span class="s1">&#39;&#39;</span> <span class="cp">%&gt;</span><span class="x"></span>
+<span class="x">  password: </span><span class="cp">&lt;%=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;VCAP_SERVICES&#39;</span><span class="o">]</span> <span class="p">)</span><span class="o">[</span><span class="s1">&#39;mongodb-1.8&#39;</span><span class="o">].</span><span class="n">first</span><span class="o">[</span><span class="s1">&#39;credentials&#39;</span><span class="o">][</span><span class="s1">&#39;password&#39;</span><span class="o">]</span> <span class="k">rescue</span> <span class="s1">&#39;&#39;</span> <span class="cp">%&gt;</span><span class="x"></span></code></pre></div>
+
+
+<p>Because we use JSON here to decode mongodb configuration, you will add the following line to your <code>Gemfile</code></p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s1">&#39;json&#39;</span></code></pre></div>
+
+
+<p>and run <code>bundle install</code> command</p>
+
+<p>To seed database we need to use a little trick. Errbit already use <code>mongoid_rails_migrations</code> so we can use rails migration to do this. Generate migration:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rails generate migration seed_database</code></pre></div>
+
+
+<p>and modify to look like this:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">SeedDatabase</span> <span class="o">&lt;</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Migration</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">up</span>
+    <span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="o">[</span><span class="s1">&#39;db:seed&#39;</span><span class="o">].</span><span class="n">invoke</span>
+    <span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="o">[</span><span class="s1">&#39;db:mongoid:create_indexes&#39;</span><span class="o">].</span><span class="n">invoke</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">down</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+
+<p>One more thing before deploying. Errbit will send an email when error occur in your app. So you should have an valid delivery_method configured. It may be your own SMTP server, <a href="http://aws.amazon.com/ses/">Amazon SES</a> or email app like <a href="http://sendgrid.com/">Sendgrid</a> or <a href="http://postmarkapp.com/">PostmarkApp</a></p>
+
+<h4>Deploy</h4>
+
+<p>To run Errbit we need two servers. One for web-server and one for MongoDB database. Setting this up is really simple. To setup the app and database server type:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vmc push errbit --path<span class="o">=</span>. --url<span class="o">=</span>martinciu-errbit.cloudfoundry.com --mem<span class="o">=</span>128M --runtime<span class="o">=</span>ruby19
+Detected a Rails Application, is this correct? <span class="o">[</span>Yn<span class="o">]</span>: 
+Creating Application: OK
+Would you like to <span class="nb">bind </span>any services to <span class="s1">&#39;errbit&#39;</span>? <span class="o">[</span>yN<span class="o">]</span>: y
+The following system services are available::
+1. mongodb
+2. mysql
+3. redis
+Please <span class="k">select</span> one you wish to provision: 1
+Specify the name of the service <span class="o">[</span>mongodb-e776e<span class="o">]</span>: 
+Creating Service: OK
+Binding Service: OK
+Uploading Application:
+  Checking <span class="k">for</span> available resources: OK
+  Processing resources: OK
+  Packing application: OK
+  Uploading <span class="o">(</span>9K<span class="o">)</span>: OK   
+Push Status: OK
+Staging Application: OK                                                         
+Starting Application: OK</code></pre></div>
+
+
+<p><code>--url</code> should be same as the one you entered in <code>config/config.yml</code> file and it should be unique. That&rsquo;s it you should have now a working application. You can check working apps by</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vmc apps
+
++-------------+----+---------+-----------------------------------+---------------+
+<span class="p">|</span> Application <span class="p">|</span> <span class="c">#  | Health  | URLS                              | Services      |</span>
++-------------+----+---------+-----------------------------------+---------------+
+<span class="p">|</span> errbit      <span class="p">|</span> <span class="m">1</span>  <span class="p">|</span> RUNNING <span class="p">|</span> martinciu-errbit.cloudfoundry.com <span class="p">|</span> mongodb-e776e <span class="p">|</span>
++-------------+----+---------+-----------------------------------+---------------+</code></pre></div>
+
+
+<p>It also shows connected services - mongodb here. You can now visit your errbit app in your browser. You should see a log in screen, but you can not log in because migrations was not run. Cloud Foundry runs migration only if <code>config/database.yml</code> exists. We don&rsquo;t have such file because mongoid uses <code>config/mongid.yml</code> file by default. To force running migration just create an empty <code>database.yml</code> file and update app:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>touch config/database.yml
+<span class="nv">$ </span>vmc update errbit
+Uploading Application:
+  Checking <span class="k">for</span> available resources: OK
+  Processing resources: OK
+  Packing application: OK
+  Uploading <span class="o">(</span>9K<span class="o">)</span>: OK   
+Push Status: OK
+Stopping Application: OK
+Staging Application: OK                                                         
+Starting Application: OK</code></pre></div>
+
+
+<p>Sometimes update doesn&rsquo;t success. In that case stopping and starting service may help.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vmc stop errbit  
+Stopping Application: OK
+
+<span class="nv">$ </span>vmc start errbit  
+Staging Application: OK                                                         
+Starting Application: OK</code></pre></div>
+
+
+<p>Alright you should be able to log in to your own error catcher app. Just visit chosen URL (<a href="http://martinciu-errbit.cloudfoundry.com/">http://martinciu-errbit.cloudfoundry.com/</a> in my case) and log in with default credentials which are email: <code>errbit@your-app-url.cloudfoundry.com</code> and password: <code>password</code>. You may want to change these default. You can do this by clicking <code>Edit profile</code> button.</p>
+
+<h4>Configuration</h4>
+
+<p>You can now configure your production app that you want be monitored by Errbit. Errbit is compatible with <a href="https://github.com/thoughtbot/hoptoad_notifier">hoptoad_notifier</a> gem, so if you are familiar with this it should be pretty obvious to you. If you don&rsquo;t use hoptoad you should add it to your <code>Gemgile</code></p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s2">&quot;hoptoad_notifier&quot;</span></code></pre></div>
+
+
+<p>and run <code>bundle install</code> command</p>
+
+<p>You can create new app on the homepage, define who should receive notifications and create a <code>config/errbit.rb</code> file from the code provided by Errbit. In my case this file looks like this:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">HoptoadNotifier</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="s1">&#39;3aa6c74ccabaf61295c1d10813575705&#39;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">host</span>    <span class="o">=</span> <span class="s1">&#39;martinciu-errbit.cloudfoundry.com&#39;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">port</span>    <span class="o">=</span> <span class="mi">80</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">secure</span>  <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">port</span> <span class="o">==</span> <span class="mi">443</span>
+<span class="k">end</span></code></pre></div>
+
+
+<p>Unfortunately Errbit overwrites default <a href="https://github.com/thoughtbot/hoptoad_notifier">hoptoad_notifier</a> settings, so you can not use both error catchers at same time. Alright you should now be able to send a test error notification. Just go to you app folder and run:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rake hoptoad:test</code></pre></div>
+
+
+<p>You should a lot of dumped XML data and a while later you should receive email notification from Errbit. You can also review the test error on your errbit app. And that it! You have up and running your own Hoptoad clone!</p>
+
+<h4>Something went wrong?</h4>
+
+<p>If something went wrong (it probably will :P) you can find these tools and resources useful:
+1. <code>vmc logs errbit</code>
+2. <code>vmc files errbit logs</code>
+3. <code>vmc help</code>
+4. Cloud Foundry <a href="http://support.cloudfoundry.com/home">Forum</a>
+5. Cloud Foundry <a href="https://github.com/cloudfoundry">source code</a> on GitHub
+6. Errbit <a href="https://github.com/jdpace/errbit">source code</a> on GitHub</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Marcin Ciunelis</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-01T00:00:00+02:00" pubdate data-updated="true"></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://martinciu.github.io/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb.html" data-via="martinciu" data-counturl="http://martinciu.github.io/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2011/06/rails-3-1-and-slow-asset-pipeline.html" title="Previous Post: Rails 3.1 and slow Asset Pipeline">&laquo; Rails 3.1 and slow Asset Pipeline</a>
+      
+      
+        <a class="basic-alignment right" href="/2011/07/difference-between-class_inheritable_attribute-and-class_attribute.html" title="Next Post: Difference between class_inheritable_attribute and class_attribute">Difference between class_inheritable_attribute and class_attribute &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+  <aside class="sidebar">
+   
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:martinciu.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2011/11/deploying-hubot-to-heroku-like-a-boss.html">Deploying Hubot to Heroku Like a Boss</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/08/how-to-add-api-throttle-to-your-rails-app.html">How to Add API Throttle to Your Rails App</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/08/upgrading-to-rails-3-1-rc5.html">Upgrading to Rails 3.1.0.rc5 (From Rc4)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/07/difference-between-class_inheritable_attribute-and-class_attribute.html">Difference Between Class_inheritable_attribute and Class_attribute</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb.html">Building Your Own Hoptoad App Clone With Errbit, VMware Cloud Foundry and MongoDB</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <a class="twitter-timeline" href="https://twitter.com/martinciu" data-widget-id="535752399613603840">Tweets by @martinciu</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/martinciu">@martinciu</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'martinciu',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Marcin Ciunelis -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'martinciu';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<script>
+  $(document).ready(function() {  
+  var stickyNavTop = $('nav').offset().top;  
+    
+  var stickyNav = function(){  
+  var scrollTop = $(window).scrollTop();  
+         
+  if (scrollTop > stickyNavTop) {   
+      $('nav').addClass('sticky');  
+  } else {  
+      $('nav').removeClass('sticky');   
+  }  
+  };  
+    
+  stickyNav();  
+    
+  $(window).scroll(function() {  
+      stickyNav();  
+  });  
+  });  
+</script>
+
+<script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4e1384ecf5a1f53f55000003');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

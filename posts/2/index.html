@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>martinciu&#8217;s dev blog</title>
+  <meta name="author" content="Marcin Ciunelis">
+
+  
+  <meta name="description" content="Maybe it is not very innovative and every ruby developer already knows about it, but when I first heard it, it was quite a hit. I mean I always feel &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://martinciu.github.io/posts/2/index.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="martinciu's dev blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-152335-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">martinciu&#8217;s dev blog</a></h1>
+  
+    <h2>about ruby, rails, javascript, nodejs, coffeescript, objective-c, swift</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  
+  
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/contact">Contact me</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="http://linkedin.com/in/martinciu/" target="_blank">LinkedIn</a></li>
+  <li><a href="https://github.com/martinciu" target="_blank">Github</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/12/ruby-doesnt-have-class-methods.html">Ruby Doesn’t Have Class Methods</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-23T00:00:00+01:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Maybe it is not very innovative and every ruby developer already knows about it, but when I first heard it, it was quite a hit. I mean I always feel that there is something wired on when I wrote some thing like <code>“def self.foo”</code> in my class, but I didn’t fully understand actually does this line do.</p>
+<p>Alright. How can ruby doesn’t have class methods that I use them all time, you could ask. You mean something like this?</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Foo</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">bar</span>
+    <span class="nb">puts</span> <span class="s2">&quot;bar&quot;</span>
+  <span class="k">end</span>
+ 
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">baz</span>
+    <span class="nb">puts</span> <span class="s2">&quot;baz&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div><p><code>bar</code> and <code>baz</code> are <code>Foo</code> ‘s class methods, aren’t they? Actually they are not! So what they are? To answer that you should know two things. You should know what does this piece of code do:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">animal</span> <span class="o">=</span> <span class="s2">&quot;cat&quot;</span>
+<span class="k">def</span> <span class="nc">animal</span><span class="o">.</span><span class="nf">speak</span>
+  <span class="s2">&quot;miau&quot;</span>
+<span class="k">end</span>
+ 
+<span class="nb">puts</span> <span class="n">animal</span><span class="o">.</span><span class="n">speak</span>
+<span class="c1"># miau</span></code></pre></div><p>It adds a <code>speak</code> method to the <code>animal</code> object. It doesn’t add it to the <code>animal</code> class (which is a <code>String</code>), it also doesn’t add it to the other “cat” string. Only to the animal. How ruby does it? It creates a something called singleton class, and put there a speak method. When animal object receives any method call, it looks first in self, then in it’s singleton class (if exist) and then in each parent. When it reaches top, <code>method_missing</code> is called and exactly same like any other methods calls.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">animal</span> <span class="o">=</span> <span class="s2">&quot;cat&quot;</span>
+ 
+<span class="k">def</span> <span class="nc">animal</span><span class="o">.</span><span class="nf">method_missing</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+  <span class="nb">p</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2"> does not </span><span class="si">#{</span><span class="n">args</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="k">end</span>
+ 
+<span class="n">animal</span><span class="o">.</span><span class="n">fly</span>
+<span class="c1"># &quot;cat does not fly&quot;</span></code></pre></div><p>The second thing you should know is what does self is in class <code>Foo</code> body.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Foo</span>
+  <span class="nb">p</span> <span class="nb">self</span>
+<span class="k">end</span>
+<span class="c1"># Foo</span></code></pre></div><p>Alright, so class Foo can looks like this:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Foo</span>
+<span class="k">end</span>
+ 
+<span class="k">def</span> <span class="nc">Foo</span><span class="o">.</span><span class="nf">bar</span>
+  <span class="nb">puts</span> <span class="s2">&quot;bar&quot;</span>
+<span class="k">end</span>
+ 
+<span class="k">def</span> <span class="nc">Foo</span><span class="o">.</span><span class="nf">baz</span>
+  <span class="nb">puts</span> <span class="s2">&quot;baz&quot;</span>
+<span class="k">end</span></code></pre></div><p>What happend here? Same as adding method <code>speak</code> for <code>animal</code> object. Here we added method baz to <code>Foo</code> object. Yes, <code>Foo</code> is an object, and it is an instance of a class <code>Class</code>. Method <code>baz</code> has been added to his singleton class. Not to all classes, just to the <code>Foo</code>. So, when you adds so called class methods, you actually adds an instance method to object’s parent class object through his singleton class.</p></div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/12/ruby-timeout-error-is-not-a-standard-error.html">Ruby Timeout::Error Is Not a StandardError</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-21T00:00:00+01:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Let&#8217;s assume that you have piece of code that does a very important job but some times this job can not be accomplished because of various reasons. One of them could be a timeout . It should also inform you nicely about that:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno">1</span> <span class="nb">require</span> <span class="s2">&quot;timeout&quot;</span>
+<span class="lineno">2</span>  
+<span class="lineno">3</span> <span class="k">begin</span>
+<span class="lineno">4</span>   <span class="n">timeout</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">)</span> <span class="k">do</span>
+<span class="lineno">5</span>     <span class="nb">sleep</span>
+<span class="lineno">6</span>   <span class="k">end</span>
+<span class="lineno">7</span> <span class="k">rescue</span>
+<span class="lineno">8</span>   <span class="nb">p</span> <span class="s2">&quot;I&#39;m sorry, Sir. We couldn&#39;t make it, Sir.&quot;</span>
+<span class="lineno">9</span> <span class="k">end</span></code></pre></div><p>This code seems to be alright. If script sleeps to long Timeout::Error exception should be thrown and I should be informed about it. Alright, lets run it:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ruby test.rb
+/Users/martinciu/.rvm/rubies/ree-1.8.7-2010.02/lib/ruby/1.8/timeout.rb:60: execution expired <span class="o">(</span>Timeout::Error<span class="o">)</span>
+	from test.rb:4</code></pre></div><p><span class="caps">WTF</span>? That was exactly what I thought when I first saw this issue. The answer is simple and actually is in documentation: “If you write a rescue clause with no parameter list, the parameter defaults to StandardError.”</p>
+<p>Wait a minute! Timeout::Error does not extend StandardError? Well, actually it doesn’t:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>irb
+&gt;&gt; Timeout::Error.ancestors
+<span class="o">=</span>&gt; <span class="o">[</span>Timeout::Error, Interrupt, SignalException, Exception, Object, Kernel<span class="o">]</span>
+&gt;&gt;</code></pre></div><p>Strange, isn’t it? It has to be strange to so many people that it has been changed in ruby 1.9:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rvm 1.9.2 irb                                                                                                                         ~/www/timeout
+&gt;&gt; require <span class="s1">&#39;timeout&#39;</span>
+<span class="o">=</span>&gt; <span class="nb">true</span>
+&gt;&gt; Timeout::Error.ancestors
+<span class="o">=</span>&gt; <span class="o">[</span>Timeout::Error, RuntimeError, StandardError, Exception, Object, Kernel, BasicObject<span class="o">]</span>
+&gt;&gt;</code></pre></div><p>So, the title of this post should read: Timeout::Error is not an StandardError in ruby 1.8.</p>
+<p>OK, what are the solutions for this case:</p>
+<ol>
+	<li>you can replace line 7 by “rescue StandardError,Timeout::Error” – only standard erors and timrouts will he rescued then</li>
+	<li>you can replace line 7 by “rescue Exception” – all exceptions will be caught than by rescue block</li>
+	<li>you can add another rescue block only for Timeout::Error</li>
+</ol>
+<p>It seems to me that solution no.1 is the best, but it could vary on your application.</p>
+<p>Are there any other Exceptions that doesn’t extend StandardError and are not rescued by defult? Yes there are some. Here is the list of a few Exceptions that you could be familiar with:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">StopIteration</span><span class="p">,</span> <span class="no">SystemStackError</span><span class="p">,</span> <span class="no">LocalJumpError</span><span class="p">,</span> <span class="no">EOFError</span><span class="p">,</span> <span class="no">IOError</span><span class="p">,</span> <span class="no">RegexpError</span><span class="p">,</span>
+<span class="no">FloatDomainError</span><span class="p">,</span> <span class="no">ZeroDivisionError</span><span class="p">,</span> <span class="no">ThreadError</span><span class="p">,</span> <span class="no">SystemCallError</span><span class="p">,</span> <span class="no">NoMemoryError</span><span class="p">,</span>
+<span class="no">SecurityError</span><span class="p">,</span> <span class="no">RuntimeError</span><span class="p">,</span> <span class="no">NotImplementedError</span><span class="p">,</span> <span class="no">LoadError</span><span class="p">,</span> <span class="no">SyntaxError</span><span class="p">,</span>
+<span class="no">ScriptError</span><span class="p">,</span> <span class="no">NoMethodError</span><span class="p">,</span> <span class="no">NameError</span><span class="p">,</span> <span class="no">RangeError</span><span class="p">,</span> <span class="no">IndexError</span><span class="p">,</span> <span class="no">ArgumentError</span><span class="p">,</span> 
+<span class="no">TypeError</span><span class="p">,</span> <span class="no">StandardError</span><span class="p">,</span> <span class="no">Interrupt</span><span class="p">,</span> <span class="no">SignalException</span><span class="p">,</span> <span class="n">fatal</span><span class="p">,</span> <span class="no">SystemExit</span></code></pre></div><p>For most of them it is best to not catch them by rescue directive. But probably there could some cases that rescuing any of these Exceptions is require. Please remember that these are only examples and there are many other exceptions that are not rescued by default.</p></div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/12/rails-admin.html">RailsAdmin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-19T00:00:00+01:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Erlier this week <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> came out to the wider world.</p>
+<p><a href="https://github.com/sferik/rails_admin">RailsAdmin</a> is a Rails engine that provides an easy-to-use interface for managing your data. <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> started as a port of <a href="http://github.com/sferik/merb-admin">MerbAdmin</a> to Rails3 and was implemented as a <a href="http://www.rubysoc.org/projects">Ruby Summer of Code</a> project by <a href="http://github.com/hurrycane">Bogdan Gaza</a> with mentors <a href="http://github.com/sferik">Erik Michaels-Ober</a>, <a href="http://github.com/wycats">Yehuda Katz</a>, <a href="http://github.com/rosenfeld">Rodrigo Rosenfeld Rosas</a>, <a href="http://github.com/plukevdh">Luke van der Hoeven</a>, and <a href="rein">Rein Henrichs</a>.</p>
+<p>I first heard it from <a href="http://twitter.com/josevalim/status/15349132516397056">Jose Valim’s tweet</a>. If he said it is very well written, it has be so. At first I thought about <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> as another <a href="http://www.activescaffold.com/">ActiveScaffold</a> or <a href="http://streamlinedframework.org/">Streamlined</a> clone. Then I remembered that I gave a try some of them but each had some issues that makes them unusable in my projects. That’s why I decided to try out the newest rails administration engine.</p>
+<p>Installation is easy and well explained in a <a href="https://github.com/sferik/rails_admin/blob/master/README.mkd">Readme</a> file. I installed it in the project that uses ActiveRecord as this is the only <span class="caps">ORM</span> supported at the moment. This is quite an issue for me as my main project uses <a href="https://github.com/jnunemaker/mongomapper">MongoMapper</a>. Fortunately <a href="https://github.com/siong1987">Teng Siong Ong</a> should be already working on this <a href="https://github.com/sferik/rails_admin/issues/#issue/105">issue</a>. The other issue that I got was that <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> is available under “/admin” route and it can not be currently changed. This is another blocking issue for me as I have this route already used in almost every application. Fortunately (again) this <a href="https://github.com/sferik/rails_admin/issues#issue/151">issue</a> should be soon (I hope) fixed.</p>
+<p>Alright. Assuming that your application uses Rails3, ActiveRecord and does not use “/admin” rooute. Are there any other issues that prevents using <a href="https://github.com/sferik/rails_admin">RailsAdmin</a>? Actually, there was (for me) a few:</p>
+<ul>
+	<li><a href="https://github.com/sferik/rails_admin">RailsAdmin</a> controller inherits from your ApplicationController. That means that if you have some wired stuff like finding subdomains, or setting locales in your ApplicationController then it break <a href="https://github.com/sferik/rails_admin">RailsAdmin</a>. However, maybe ApplicationController is not the best place to keep that kind of stuff.</li>
+	<li>if you have I18n.default_locale set in your environment.rb and <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> doesn’t support it, than the only thing that you’ll see are “translation_missing” messages</li>
+	<li>looking at the list of <a href="https://github.com/sferik/rails_admin/issues">issues</a> on github there could be even more</li>
+</ul>
+<p>Besides issues that I mentioned, and other that you could have I think that could be a really useful tool for every rails developer. Looking at the same issue list and recent commit history I believe that <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> will be one of that tools that you adds to your each new application.</p>
+<p>Thanks to <a href="http://github.com/sferik">Erik</a>, and to all contributors.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/12/my-gemfile.html">My Gemfile</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-19T00:00:00+01:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For each new rails project I almost always put same gems to the Gemfile with initial commit. Here is my gemfile compiled from a few recent projects. Hope some of you find something new for your projects.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s1">&#39;http://rubygems.org&#39;</span>
+ 
+<span class="n">gem</span> <span class="s1">&#39;rails&#39;</span>               <span class="c1"># pretty obvious</span>
+<span class="n">gem</span> <span class="s1">&#39;mysql2&#39;</span>              <span class="c1"># or mongoid if I&#39;m not using mysql</span>
+<span class="n">gem</span> <span class="s1">&#39;devise&#39;</span>              <span class="c1"># authentication done right</span>
+<span class="n">gem</span> <span class="s1">&#39;newrelic_rpm&#39;</span>        <span class="c1"># best monitoring service for me, very useful</span>
+                          <span class="c1"># in development too</span>
+<span class="n">gem</span> <span class="s1">&#39;inherited_resources&#39;</span> <span class="c1"># makes my controller DRY</span>
+<span class="n">gem</span> <span class="s1">&#39;formtastic&#39;</span>          <span class="c1"># for less painful forms</span>
+<span class="n">gem</span> <span class="s1">&#39;carrier_wave&#39;</span>        <span class="c1"># cool way in managing uploaded files</span>
+<span class="n">gem</span> <span class="s1">&#39;hoptoad_notifier&#39;</span>    <span class="c1"># simple and cheap error notification service</span>
+<span class="n">gem</span> <span class="s1">&#39;haml&#39;</span>                <span class="c1"># makes views more readable</span>
+<span class="n">gem</span> <span class="s1">&#39;haml-rails&#39;</span>          <span class="c1"># adds haml in generators</span>
+<span class="n">gem</span> <span class="s1">&#39;rails3-generators&#39;</span>   <span class="c1"># add rails3 compatible generators to gems that</span>
+                          <span class="c1"># don&#39;t have them</span>
+<span class="n">gem</span> <span class="s1">&#39;jquery-rails&#39;</span>        <span class="c1"># to replace prototype</span>
+<span class="n">gem</span> <span class="s1">&#39;jammit&#39;</span>              <span class="c1"># powerful asset packager</span>
+<span class="n">gem</span> <span class="s1">&#39;resque&#39;</span>              <span class="c1"># for background jobs</span>
+ 
+<span class="n">group</span> <span class="ss">:development</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">&#39;mail_safe&#39;</span>         <span class="c1"># it makes you sure that you won&#39;t send test</span>
+                          <span class="c1"># email to all your user base</span>
+<span class="k">end</span>
+ 
+<span class="n">group</span> <span class="ss">:development</span><span class="p">,</span> <span class="ss">:test</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">&#39;cucumber-rails&#39;</span>    <span class="c1"># it knows how your application should behave</span>
+  <span class="n">gem</span> <span class="s1">&#39;database_cleaner&#39;</span>  <span class="c1"># easily cleans your database during tests</span>
+  <span class="n">gem</span> <span class="s1">&#39;capybara&#39;</span>          <span class="c1"># best browser simulator</span>
+  <span class="n">gem</span> <span class="s1">&#39;rspec-rails&#39;</span>       <span class="c1"># good test-unit replacement</span>
+  <span class="n">gem</span> <span class="s1">&#39;machinist&#39;</span>         <span class="c1"># fixtures are fun again</span>
+  <span class="n">gem</span> <span class="s1">&#39;faker&#39;</span>             <span class="c1"># to generating tons of fake data</span>
+  <span class="n">gem</span> <span class="s1">&#39;pickle&#39;</span>            <span class="c1"># easy model creations and more for cucumber</span>
+  <span class="n">gem</span> <span class="s1">&#39;email_spec&#39;</span>        <span class="c1"># rspec matchers for emails</span>
+  <span class="n">gem</span> <span class="s1">&#39;timecop&#39;</span>           <span class="c1"># great tool if your application time sensitive</span>
+  <span class="n">gem</span> <span class="s1">&#39;shoulda&#39;</span>           <span class="c1"># useful macros for rspec</span>
+  <span class="n">gem</span> <span class="s1">&#39;launchy&#39;</span>           <span class="c1"># simple tool launching applications from ruby</span>
+  <span class="n">gem</span> <span class="s1">&#39;capistrano&#39;</span>        <span class="c1"># my tool of choice for deployment</span>
+  <span class="n">gem</span> <span class="s1">&#39;capistrano-ext&#39;</span>    <span class="c1"># with some extensions for multistage</span>
+  <span class="n">gem</span> <span class="s1">&#39;bond&#39;</span>              <span class="c1"># makes irb more useful</span>
+  <span class="n">gem</span> <span class="s1">&#39;rcov&#39;</span>              <span class="c1"># code coverage tool</span>
+  <span class="n">gem</span> <span class="s1">&#39;fuubar&#39;</span>            <span class="c1"># progress bar rspec formatter</span>
+  <span class="n">gem</span> <span class="s1">&#39;fuubar-cucumber&#39;</span>   <span class="c1"># progress bar cucumber formatter</span>
+  <span class="n">gem</span> <span class="s1">&#39;chronic&#39;</span>           <span class="c1"># easy time parsing</span>
+  <span class="n">gem</span> <span class="s1">&#39;fakeweb&#39;</span>           <span class="c1"># for mocking net/http connections</span>
+  <span class="n">gem</span> <span class="s1">&#39;vcr&#39;</span>               <span class="c1"># records and plays back http calls</span>
+<span class="k">end</span></code></pre></div><p>I hope you find at least one gem that you haven’t heard about.</p></div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/10/fuubar-cucumber.html">Fuubar-cucumber</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-21T00:00:00+02:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A few days ago <a href="http://jeffkreeftmeijer.com/">Jeff Kreeftmeijer</a> released <a href="http://jeffkreeftmeijer.com/2010/fuubar-the-instafailing-rspec-progress-bar-formatter/">Fuubar: the instafailing RSpec progress bar formatter</a>. It is great, and I use it as default formatter in all my projects. As I started to use it I realised that it would be great to have similar formatter for <a href="https://github.com/aslakhellesoy/cucumber">Cucumber</a>. At first I wanted to add cucuber formatter class to <a href="https://github.com/jeffkreeftmeijer/fuubar">Jeff’s gem</a>, but later I decided to make it a separet gam because of gem dependencies.</p>
+<p>This is where <a href="https://github.com/martinciu/fuubar-cucumber">fuubar-cucumber</a> came from. Installation is simple. Just add it to your gem file:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s1">&#39;fuubar-cucumber&#39;</span></code></pre></div><p>or install manualy</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>gem install fuubar-cucumber</code></pre></div><p>and from now on you can run your cucumber features with ‘–format Cucumber::Formatter::Fuubar’ option. Hope you find it useful.</p>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="1">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+   
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:martinciu.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2011/11/deploying-hubot-to-heroku-like-a-boss.html">Deploying Hubot to Heroku Like a Boss</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/08/how-to-add-api-throttle-to-your-rails-app.html">How to Add API Throttle to Your Rails App</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/08/upgrading-to-rails-3-1-rc5.html">Upgrading to Rails 3.1.0.rc5 (From Rc4)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/07/difference-between-class_inheritable_attribute-and-class_attribute.html">Difference Between Class_inheritable_attribute and Class_attribute</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb.html">Building Your Own Hoptoad App Clone With Errbit, VMware Cloud Foundry and MongoDB</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <a class="twitter-timeline" href="https://twitter.com/martinciu" data-widget-id="535752399613603840">Tweets by @martinciu</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/martinciu">@martinciu</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'martinciu',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Marcin Ciunelis -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'martinciu';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<script>
+  $(document).ready(function() {  
+  var stickyNavTop = $('nav').offset().top;  
+    
+  var stickyNav = function(){  
+  var scrollTop = $(window).scrollTop();  
+         
+  if (scrollTop > stickyNavTop) {   
+      $('nav').addClass('sticky');  
+  } else {  
+      $('nav').removeClass('sticky');   
+  }  
+  };  
+    
+  stickyNav();  
+    
+  $(window).scroll(function() {  
+      stickyNav();  
+  });  
+  });  
+</script>
+
+<script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4e1384ecf5a1f53f55000003');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

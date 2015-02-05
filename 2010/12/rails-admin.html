@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>RailsAdmin - martinciu&#8217;s dev blog</title>
+  <meta name="author" content="Marcin Ciunelis">
+
+  
+  <meta name="description" content="Erlier this week RailsAdmin came out to the wider world.
+RailsAdmin is a Rails engine that provides an easy-to-use interface for managing your data. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://martinciu.github.io/2010/12/rails-admin.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="martinciu's dev blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-152335-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">martinciu&#8217;s dev blog</a></h1>
+  
+    <h2>about ruby, rails, javascript, nodejs, coffeescript, objective-c, swift</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  
+  
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/contact">Contact me</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="http://linkedin.com/in/martinciu/" target="_blank">LinkedIn</a></li>
+  <li><a href="https://github.com/martinciu" target="_blank">Github</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">RailsAdmin</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-19T00:00:00+01:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Erlier this week <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> came out to the wider world.</p>
+<p><a href="https://github.com/sferik/rails_admin">RailsAdmin</a> is a Rails engine that provides an easy-to-use interface for managing your data. <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> started as a port of <a href="http://github.com/sferik/merb-admin">MerbAdmin</a> to Rails3 and was implemented as a <a href="http://www.rubysoc.org/projects">Ruby Summer of Code</a> project by <a href="http://github.com/hurrycane">Bogdan Gaza</a> with mentors <a href="http://github.com/sferik">Erik Michaels-Ober</a>, <a href="http://github.com/wycats">Yehuda Katz</a>, <a href="http://github.com/rosenfeld">Rodrigo Rosenfeld Rosas</a>, <a href="http://github.com/plukevdh">Luke van der Hoeven</a>, and <a href="rein">Rein Henrichs</a>.</p>
+<p>I first heard it from <a href="http://twitter.com/josevalim/status/15349132516397056">Jose Valim’s tweet</a>. If he said it is very well written, it has be so. At first I thought about <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> as another <a href="http://www.activescaffold.com/">ActiveScaffold</a> or <a href="http://streamlinedframework.org/">Streamlined</a> clone. Then I remembered that I gave a try some of them but each had some issues that makes them unusable in my projects. That’s why I decided to try out the newest rails administration engine.</p>
+<p>Installation is easy and well explained in a <a href="https://github.com/sferik/rails_admin/blob/master/README.mkd">Readme</a> file. I installed it in the project that uses ActiveRecord as this is the only <span class="caps">ORM</span> supported at the moment. This is quite an issue for me as my main project uses <a href="https://github.com/jnunemaker/mongomapper">MongoMapper</a>. Fortunately <a href="https://github.com/siong1987">Teng Siong Ong</a> should be already working on this <a href="https://github.com/sferik/rails_admin/issues/#issue/105">issue</a>. The other issue that I got was that <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> is available under “/admin” route and it can not be currently changed. This is another blocking issue for me as I have this route already used in almost every application. Fortunately (again) this <a href="https://github.com/sferik/rails_admin/issues#issue/151">issue</a> should be soon (I hope) fixed.</p>
+<p>Alright. Assuming that your application uses Rails3, ActiveRecord and does not use “/admin” rooute. Are there any other issues that prevents using <a href="https://github.com/sferik/rails_admin">RailsAdmin</a>? Actually, there was (for me) a few:</p>
+<ul>
+	<li><a href="https://github.com/sferik/rails_admin">RailsAdmin</a> controller inherits from your ApplicationController. That means that if you have some wired stuff like finding subdomains, or setting locales in your ApplicationController then it break <a href="https://github.com/sferik/rails_admin">RailsAdmin</a>. However, maybe ApplicationController is not the best place to keep that kind of stuff.</li>
+	<li>if you have I18n.default_locale set in your environment.rb and <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> doesn’t support it, than the only thing that you’ll see are “translation_missing” messages</li>
+	<li>looking at the list of <a href="https://github.com/sferik/rails_admin/issues">issues</a> on github there could be even more</li>
+</ul>
+<p>Besides issues that I mentioned, and other that you could have I think that could be a really useful tool for every rails developer. Looking at the same issue list and recent commit history I believe that <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> will be one of that tools that you adds to your each new application.</p>
+<p>Thanks to <a href="http://github.com/sferik">Erik</a>, and to all contributors.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Marcin Ciunelis</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-19T00:00:00+01:00" pubdate data-updated="true"></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://martinciu.github.io/2010/12/rails-admin.html" data-via="martinciu" data-counturl="http://martinciu.github.io/2010/12/rails-admin.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2010/12/my-gemfile.html" title="Previous Post: My Gemfile">&laquo; My Gemfile</a>
+      
+      
+        <a class="basic-alignment right" href="/2010/12/ruby-timeout-error-is-not-a-standard-error.html" title="Next Post: Ruby Timeout::Error is not a StandardError">Ruby Timeout::Error is not a StandardError &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+  <aside class="sidebar">
+   
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:martinciu.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2011/11/deploying-hubot-to-heroku-like-a-boss.html">Deploying Hubot to Heroku Like a Boss</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/08/how-to-add-api-throttle-to-your-rails-app.html">How to Add API Throttle to Your Rails App</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/08/upgrading-to-rails-3-1-rc5.html">Upgrading to Rails 3.1.0.rc5 (From Rc4)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/07/difference-between-class_inheritable_attribute-and-class_attribute.html">Difference Between Class_inheritable_attribute and Class_attribute</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb.html">Building Your Own Hoptoad App Clone With Errbit, VMware Cloud Foundry and MongoDB</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <a class="twitter-timeline" href="https://twitter.com/martinciu" data-widget-id="535752399613603840">Tweets by @martinciu</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/martinciu">@martinciu</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'martinciu',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Marcin Ciunelis -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'martinciu';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<script>
+  $(document).ready(function() {  
+  var stickyNavTop = $('nav').offset().top;  
+    
+  var stickyNav = function(){  
+  var scrollTop = $(window).scrollTop();  
+         
+  if (scrollTop > stickyNavTop) {   
+      $('nav').addClass('sticky');  
+  } else {  
+      $('nav').removeClass('sticky');   
+  }  
+  };  
+    
+  stickyNav();  
+    
+  $(window).scroll(function() {  
+      stickyNav();  
+  });  
+  });  
+</script>
+
+<script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4e1384ecf5a1f53f55000003');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

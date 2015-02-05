@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Deploying Hubot to Heroku Like a Boss - martinciu&#8217;s dev blog</title>
+  <meta name="author" content="Marcin Ciunelis">
+
+  
+  <meta name="description" content="What is Hubot? Hubot was an almost mythical GitHub campfire bot. They use it for deploying, automate a lot of tasks, and to be a source of fun in the &hellip;">
+  <meta name="keywords" content="hubot, heroku, npm, nodejs, node, coffeescript, javascript, deploying, git, github, homebrew, redis">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://martinciu.github.io/2011/11/deploying-hubot-to-heroku-like-a-boss.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="martinciu's dev blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-152335-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">martinciu&#8217;s dev blog</a></h1>
+  
+    <h2>about ruby, rails, javascript, nodejs, coffeescript, objective-c, swift</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  
+  
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/contact">Contact me</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="http://linkedin.com/in/martinciu/" target="_blank">LinkedIn</a></li>
+  <li><a href="https://github.com/martinciu" target="_blank">Github</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Deploying Hubot to Heroku Like a Boss</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-01T00:00:00+01:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h4>What is Hubot?</h4>
+
+<p><a href="http://hubot.github.com/">Hubot</a> was an almost mythical GitHub <a href="http://campfirenow.com/">campfire</a> bot. They use it for deploying, automate a lot of tasks, and to be a source of fun in the company. Was, because they <a href="https://github.com/blog/968-say-hello-to-hubot">open sourced</a> it some time age.</p>
+
+<h4>Hubot &amp; Heroku</h4>
+
+<p>When I decided to give hubot a try on <a href="http://www.heroku.com/">Heroku</a> I googled for it and found <a href="https://github.com/github/hubot/wiki/Hubot-on-Heroku">a few</a> <a href="http://apocryph.org/2011/10/29/how-i-got-hubot-deployed-to-heroku/">tutorials</a> and <a href="http://jonmagic.com/blog/archives/2011/10/28/hipchat-hubot-and-me">blog posts</a>. All of them advise to download (or clone) main <a href="https://github.com/github/hubot">hubot repository</a> and deploy it to heroku. In may opinion this is not the best way to do it. This post describes how to create separated deployable hubot application.</p>
+
+<h4>Tools needed</h4>
+
+<p>You will need a <a href="http://www.ruby-lang.org">ruby</a>, <a href="http://git-scm.com/">git</a>, <a href="http://nodejs.org/">node.js</a>, <a href="http://npmjs.org/">npm</a> and a heroku gem installed. Ruby and git is pretty common. You will install heroku gem by:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>gem install heroku</code></pre></div>
+
+
+<p>then node.js with Homebrew</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>brew install node</code></pre></div>
+
+
+<p>and npm</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl http://npmjs.org/install.sh <span class="p">|</span> sh</code></pre></div>
+
+
+<h4>Things done locally</h4>
+
+<p>Clone <a href="https://github.com/github/hubot">hubot repository</a> and create a new directory that will deployed to heroku.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone git://github.com/github/hubot.git
+<span class="nv">$ </span><span class="nb">cd </span>hubot
+<span class="nv">$ </span>npm install    <span class="c"># install all required dependencies</span>
+<span class="nv">$ </span>bin/hubot --create ../acmebot</code></pre></div>
+
+
+<p>If you go to the created directory you should see file structure similar to this:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> ../acmebot
+<span class="nv">$ </span>ls -l
+~/www/blog/hubot/acmebot  
+total 32
+-rw-r--r--   <span class="m">1</span> martinciu  staff    <span class="m">36</span> <span class="m">31</span> paź 21:28 Procfile
+-rw-r--r--   <span class="m">1</span> martinciu  staff  <span class="m">3411</span> <span class="m">31</span> paź 21:28 README.md
+drwxr-xr-x   <span class="m">3</span> martinciu  staff   <span class="m">102</span> <span class="m">31</span> paź 21:28 bin
+-rw-r--r--   <span class="m">1</span> martinciu  staff    <span class="m">56</span> <span class="m">31</span> paź 21:28 hubot-scripts.json
+-rw-r--r--   <span class="m">1</span> martinciu  staff   <span class="m">518</span> <span class="m">31</span> paź 21:28 package.json
+drwxr-xr-x  <span class="m">12</span> martinciu  staff   <span class="m">408</span> <span class="m">31</span> paź 21:28 scripts</code></pre></div>
+
+
+<p>This will be your hubot application that you will deploy to heroku. First create a new git repository.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git init .
+<span class="nv">$ </span>git add .
+<span class="nv">$ </span>git commit -m <span class="s2">&quot;initial commit&quot;</span></code></pre></div>
+
+
+<p>Now you can create a new heroku app.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>heroku create acmebot --stack cedar</code></pre></div>
+
+
+<p>And now you can deploy your own hubot to heroku.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git push heroku</code></pre></div>
+
+
+<h4>Heroku configuration</h4>
+
+<p>It is deployed, but hubot won&rsquo;t join any <a href="http://campfirenow.com/">campfire</a> room because it doesn&rsquo;t know anything about it. You have to tell him what room(s) should he go to. You can do it by heroku configuration variables.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Campfire user&#39;s token. You can find it on user&#39;s profile pages.</span>
+<span class="c"># You should probably have additional campfire user for a hubot </span>
+<span class="nv">$ </span>heroku config:add <span class="nv">HUBOT_CAMPFIRE_TOKEN</span><span class="o">=</span>secret
+<span class="c"># room ids coma-separated (you can find room id in room URL)</span>
+<span class="nv">$ </span>heroku config:add <span class="nv">HUBOT_CAMPFIRE_ROOMS</span><span class="o">=</span><span class="m">123</span> 
+<span class="c"># your campfire account subdoamin</span>
+<span class="nv">$ </span>heroku config:add <span class="nv">HUBOT_CAMPFIRE_ACCOUNT</span><span class="o">=</span><span class="s2">&quot;acme&quot;</span></code></pre></div>
+
+
+<p>For some scripts <a href="http://redis.io/">Redis</a> is required. You can add a free <a href="https://redistogo.com/">RedisToGo</a> service by typing:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>heroku addons:add redistogo:nano</code></pre></div>
+
+
+<p>All is set up. Now you can start hubot:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>heroku ps:scale <span class="nv">app</span><span class="o">=</span>1</code></pre></div>
+
+
+<h4>It&rsquo;s alive!</h4>
+
+<p>Now if you go to you campfire room and type</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>Hubot <span class="nb">help</span></code></pre></div>
+
+
+<p>you should get a list of commands that your Hubot is familiar with.</p>
+
+<h4>When it is not alive :/</h4>
+
+<p>If hubot doesn&rsquo;t speak to you, it means that something went wrong. In that case you can check heroku logs by typing in console:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>heroku logs</code></pre></div>
+
+
+<p>You can also check application status by typing:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>heroku ps</code></pre></div>
+
+
+<h4>More scripts</h4>
+
+<p>You have just deployed a basic hubot set up. If you want to add more commands you can find them on the <a href="https://github.com/github/hubot-scripts">hubot-scripts  repository</a>. It is already added to you your copy of hubot. To turn it on you should edit <code>hubot-scripts.json</code> file. It is simple JSON file with list of custom scripts that should be loaded. At the time of writing some of the scripts that are available in the hubot-scripts repository are not yet available on the npm. So if your hubot doesn&rsquo;t start after adding some custom scripts, check it&rsquo;s log files to see what scripts can&rsquo;t be found.</p>
+
+<h4>Robot&rsquo;s name</h4>
+
+<p>Hubot only talks to you if you call him by name. And it is a new of the user who&rsquo;s token hubot uses. You can specify that name in the <code>Procfile</code></p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="ss">app</span><span class="p">:</span> <span class="n">bin</span><span class="o">/</span><span class="n">hubot</span> <span class="o">--</span><span class="n">adapter</span> <span class="n">campfire</span> <span class="o">--</span><span class="nb">name</span> <span class="n">acmebot</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">slash</span></code></pre></div>
+
+
+<p>And if you don&rsquo;t want to talk to hubot by name you can add <code>--enable-slash</code> option. It will allow to replace robot&rsquo;s name with <code>/</code>. Example:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">/mustache me lady gaga</code></pre></div>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Marcin Ciunelis</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-01T00:00:00+01:00" pubdate data-updated="true"></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://martinciu.github.io/2011/11/deploying-hubot-to-heroku-like-a-boss.html" data-via="martinciu" data-counturl="http://martinciu.github.io/2011/11/deploying-hubot-to-heroku-like-a-boss.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2011/08/how-to-add-api-throttle-to-your-rails-app.html" title="Previous Post: How to add API throttle to your rails app">&laquo; How to add API throttle to your rails app</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+  <aside class="sidebar">
+   
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:martinciu.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2011/11/deploying-hubot-to-heroku-like-a-boss.html">Deploying Hubot to Heroku Like a Boss</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/08/how-to-add-api-throttle-to-your-rails-app.html">How to Add API Throttle to Your Rails App</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/08/upgrading-to-rails-3-1-rc5.html">Upgrading to Rails 3.1.0.rc5 (From Rc4)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/07/difference-between-class_inheritable_attribute-and-class_attribute.html">Difference Between Class_inheritable_attribute and Class_attribute</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb.html">Building Your Own Hoptoad App Clone With Errbit, VMware Cloud Foundry and MongoDB</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <a class="twitter-timeline" href="https://twitter.com/martinciu" data-widget-id="535752399613603840">Tweets by @martinciu</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/martinciu">@martinciu</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'martinciu',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Marcin Ciunelis -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'martinciu';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<script>
+  $(document).ready(function() {  
+  var stickyNavTop = $('nav').offset().top;  
+    
+  var stickyNav = function(){  
+  var scrollTop = $(window).scrollTop();  
+         
+  if (scrollTop > stickyNavTop) {   
+      $('nav').addClass('sticky');  
+  } else {  
+      $('nav').removeClass('sticky');   
+  }  
+  };  
+    
+  stickyNav();  
+    
+  $(window).scroll(function() {  
+      stickyNav();  
+  });  
+  });  
+</script>
+
+<script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4e1384ecf5a1f53f55000003');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

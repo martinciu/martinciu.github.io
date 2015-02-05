@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Gemfile - martinciu&#8217;s dev blog</title>
+  <meta name="author" content="Marcin Ciunelis">
+
+  
+  <meta name="description" content="For each new rails project I almost always put same gems to the Gemfile with initial commit. Here is my gemfile compiled from a few recent projects. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://martinciu.github.io/2010/12/my-gemfile.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="martinciu's dev blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-152335-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">martinciu&#8217;s dev blog</a></h1>
+  
+    <h2>about ruby, rails, javascript, nodejs, coffeescript, objective-c, swift</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  
+  
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/contact">Contact me</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="http://linkedin.com/in/martinciu/" target="_blank">LinkedIn</a></li>
+  <li><a href="https://github.com/martinciu" target="_blank">Github</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">My Gemfile</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-19T00:00:00+01:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>For each new rails project I almost always put same gems to the Gemfile with initial commit. Here is my gemfile compiled from a few recent projects. Hope some of you find something new for your projects.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s1">&#39;http://rubygems.org&#39;</span>
+ 
+<span class="n">gem</span> <span class="s1">&#39;rails&#39;</span>               <span class="c1"># pretty obvious</span>
+<span class="n">gem</span> <span class="s1">&#39;mysql2&#39;</span>              <span class="c1"># or mongoid if I&#39;m not using mysql</span>
+<span class="n">gem</span> <span class="s1">&#39;devise&#39;</span>              <span class="c1"># authentication done right</span>
+<span class="n">gem</span> <span class="s1">&#39;newrelic_rpm&#39;</span>        <span class="c1"># best monitoring service for me, very useful</span>
+                          <span class="c1"># in development too</span>
+<span class="n">gem</span> <span class="s1">&#39;inherited_resources&#39;</span> <span class="c1"># makes my controller DRY</span>
+<span class="n">gem</span> <span class="s1">&#39;formtastic&#39;</span>          <span class="c1"># for less painful forms</span>
+<span class="n">gem</span> <span class="s1">&#39;carrier_wave&#39;</span>        <span class="c1"># cool way in managing uploaded files</span>
+<span class="n">gem</span> <span class="s1">&#39;hoptoad_notifier&#39;</span>    <span class="c1"># simple and cheap error notification service</span>
+<span class="n">gem</span> <span class="s1">&#39;haml&#39;</span>                <span class="c1"># makes views more readable</span>
+<span class="n">gem</span> <span class="s1">&#39;haml-rails&#39;</span>          <span class="c1"># adds haml in generators</span>
+<span class="n">gem</span> <span class="s1">&#39;rails3-generators&#39;</span>   <span class="c1"># add rails3 compatible generators to gems that</span>
+                          <span class="c1"># don&#39;t have them</span>
+<span class="n">gem</span> <span class="s1">&#39;jquery-rails&#39;</span>        <span class="c1"># to replace prototype</span>
+<span class="n">gem</span> <span class="s1">&#39;jammit&#39;</span>              <span class="c1"># powerful asset packager</span>
+<span class="n">gem</span> <span class="s1">&#39;resque&#39;</span>              <span class="c1"># for background jobs</span>
+ 
+<span class="n">group</span> <span class="ss">:development</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">&#39;mail_safe&#39;</span>         <span class="c1"># it makes you sure that you won&#39;t send test</span>
+                          <span class="c1"># email to all your user base</span>
+<span class="k">end</span>
+ 
+<span class="n">group</span> <span class="ss">:development</span><span class="p">,</span> <span class="ss">:test</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">&#39;cucumber-rails&#39;</span>    <span class="c1"># it knows how your application should behave</span>
+  <span class="n">gem</span> <span class="s1">&#39;database_cleaner&#39;</span>  <span class="c1"># easily cleans your database during tests</span>
+  <span class="n">gem</span> <span class="s1">&#39;capybara&#39;</span>          <span class="c1"># best browser simulator</span>
+  <span class="n">gem</span> <span class="s1">&#39;rspec-rails&#39;</span>       <span class="c1"># good test-unit replacement</span>
+  <span class="n">gem</span> <span class="s1">&#39;machinist&#39;</span>         <span class="c1"># fixtures are fun again</span>
+  <span class="n">gem</span> <span class="s1">&#39;faker&#39;</span>             <span class="c1"># to generating tons of fake data</span>
+  <span class="n">gem</span> <span class="s1">&#39;pickle&#39;</span>            <span class="c1"># easy model creations and more for cucumber</span>
+  <span class="n">gem</span> <span class="s1">&#39;email_spec&#39;</span>        <span class="c1"># rspec matchers for emails</span>
+  <span class="n">gem</span> <span class="s1">&#39;timecop&#39;</span>           <span class="c1"># great tool if your application time sensitive</span>
+  <span class="n">gem</span> <span class="s1">&#39;shoulda&#39;</span>           <span class="c1"># useful macros for rspec</span>
+  <span class="n">gem</span> <span class="s1">&#39;launchy&#39;</span>           <span class="c1"># simple tool launching applications from ruby</span>
+  <span class="n">gem</span> <span class="s1">&#39;capistrano&#39;</span>        <span class="c1"># my tool of choice for deployment</span>
+  <span class="n">gem</span> <span class="s1">&#39;capistrano-ext&#39;</span>    <span class="c1"># with some extensions for multistage</span>
+  <span class="n">gem</span> <span class="s1">&#39;bond&#39;</span>              <span class="c1"># makes irb more useful</span>
+  <span class="n">gem</span> <span class="s1">&#39;rcov&#39;</span>              <span class="c1"># code coverage tool</span>
+  <span class="n">gem</span> <span class="s1">&#39;fuubar&#39;</span>            <span class="c1"># progress bar rspec formatter</span>
+  <span class="n">gem</span> <span class="s1">&#39;fuubar-cucumber&#39;</span>   <span class="c1"># progress bar cucumber formatter</span>
+  <span class="n">gem</span> <span class="s1">&#39;chronic&#39;</span>           <span class="c1"># easy time parsing</span>
+  <span class="n">gem</span> <span class="s1">&#39;fakeweb&#39;</span>           <span class="c1"># for mocking net/http connections</span>
+  <span class="n">gem</span> <span class="s1">&#39;vcr&#39;</span>               <span class="c1"># records and plays back http calls</span>
+<span class="k">end</span></code></pre></div><p>I hope you find at least one gem that you haven’t heard about.</p></div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Marcin Ciunelis</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-19T00:00:00+01:00" pubdate data-updated="true"></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://martinciu.github.io/2010/12/my-gemfile.html" data-via="martinciu" data-counturl="http://martinciu.github.io/2010/12/my-gemfile.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2010/10/fuubar-cucumber.html" title="Previous Post: fuubar-cucumber">&laquo; fuubar-cucumber</a>
+      
+      
+        <a class="basic-alignment right" href="/2010/12/rails-admin.html" title="Next Post: RailsAdmin">RailsAdmin &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+  <aside class="sidebar">
+   
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:martinciu.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2011/11/deploying-hubot-to-heroku-like-a-boss.html">Deploying Hubot to Heroku Like a Boss</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/08/how-to-add-api-throttle-to-your-rails-app.html">How to Add API Throttle to Your Rails App</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/08/upgrading-to-rails-3-1-rc5.html">Upgrading to Rails 3.1.0.rc5 (From Rc4)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/07/difference-between-class_inheritable_attribute-and-class_attribute.html">Difference Between Class_inheritable_attribute and Class_attribute</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/07/building-your-own-hoptoad-app-clone-with-errbit-vmware-cloud-foundry-and-mongodb.html">Building Your Own Hoptoad App Clone With Errbit, VMware Cloud Foundry and MongoDB</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <a class="twitter-timeline" href="https://twitter.com/martinciu" data-widget-id="535752399613603840">Tweets by @martinciu</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/martinciu">@martinciu</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'martinciu',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Marcin Ciunelis -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'martinciu';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<script>
+  $(document).ready(function() {  
+  var stickyNavTop = $('nav').offset().top;  
+    
+  var stickyNav = function(){  
+  var scrollTop = $(window).scrollTop();  
+         
+  if (scrollTop > stickyNavTop) {   
+      $('nav').addClass('sticky');  
+  } else {  
+      $('nav').removeClass('sticky');   
+  }  
+  };  
+    
+  stickyNav();  
+    
+  $(window).scroll(function() {  
+      stickyNav();  
+  });  
+  });  
+</script>
+
+<script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4e1384ecf5a1f53f55000003');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>
